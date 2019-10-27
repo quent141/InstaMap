@@ -24,6 +24,29 @@ body {
 #sidebar-wrapper .list-group {
   width: 15rem;
 }
+#left-sidebar-wrapper {
+  background-color: salmon;
+  min-height: 100vh;
+  margin-right:-15rem;
+  -webkit-transition: margin .25s ease-out;
+  -moz-transition: margin .25s ease-out;
+  -o-transition: margin .25s ease-out;
+  transition: margin .25s ease-out;
+}
+
+#left-sidebar-wrapper .sidebar-heading {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.2rem;
+}
+
+#left-sidebar-wrapper .list-group {
+  width: 15rem;
+}
+
+
+.event-name {
+  background-color:  red;
+}
 
 #page-content-wrapper {
   min-width: 100vw;
@@ -33,9 +56,16 @@ body {
   margin-left: 0;
 }
 
+#wrapper.toggled #left-sidebar-wrapper {
+  margin-right: 0;
+}
+
 @media (min-width: 768px) {
   #sidebar-wrapper {
     margin-left: 0;
+  }
+  #left-sidebar-wrapper {
+    margin-right: 0;
   }
 
   #page-content-wrapper {
@@ -45,5 +75,8 @@ body {
 
   #wrapper.toggled #sidebar-wrapper {
     margin-left: -15rem;
+  }
+  #wrapper.toggled #left-sidebar-wrapper {
+    margin-right: -15rem;
   }
 }
