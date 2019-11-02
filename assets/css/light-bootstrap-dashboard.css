@@ -339,7 +339,7 @@ body>.navbar-collapse {
     top: 0;
     bottom: 0;
     left: 0;
-    width: 260px;
+    width: 300px;
     display: block;
     z-index: 1;
     color: #fff;
@@ -354,7 +354,7 @@ body>.navbar-collapse .sidebar-wrapper {
     max-height: calc(100vh - 75px);
     min-height: 100%;
     overflow: auto;
-    width: 260px;
+    width: 300px;
     z-index: 4;
     padding-bottom: 100px;
 }
@@ -515,6 +515,21 @@ body>.navbar-collapse .nav .nav-link {
     line-height: 30px;
     font-size: 12px;
     font-weight: 600;
+}
+
+.sidebar .votes{
+    width: 300px;
+    padding: 10px 10px;
+    display: inline-block;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+.upvote{
+    float: left;
+    width: 50%
+}
+.downvote{
+    float: left;
+    width: 50%
 }
 
 .sidebar .logo,
@@ -3971,16 +3986,16 @@ Copyright (c) 2015 Daniel Eden
 
 /*          Changes for small display      */
 
-@media (max-width: 991px) {
+@media (max-width: 991px) { /*phones*/
     .sidebar {
         right: 0 !important;
         left: auto;
         position: absolute;
-        -webkit-transform: translate3d(262px, 0, 0);
-        -moz-transform: translate3d(262px, 0, 0);
-        -o-transform: translate3d(262px, 0, 0);
-        -ms-transform: translate3d(262px, 0, 0);
-        transform: translate3d(262px, 0, 0) !important;
+        -webkit-transform: translate3d(300px, 0, 0);
+        -moz-transform: translate3d(300px, 0, 0);
+        -o-transform: translate3d(300px, 0, 0);
+        -ms-transform: translate3d(300px, 0, 0);
+        transform: translate3d(300px, 0, 0) !important;
         -webkit-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
         -moz-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
         -o-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
@@ -4575,7 +4590,7 @@ Copyright (c) 2015 Daniel Eden
     }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 991px) { /*phones*/
     .table-responsive {
         width: 100%;
         margin-bottom: 15px;
