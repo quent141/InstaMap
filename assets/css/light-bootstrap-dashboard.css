@@ -335,17 +335,25 @@ input:focus {
 
 .sidebar,
 body>.navbar-collapse {
-    position: absolute;
+    position: relative;
     top: 0;
     bottom: 0;
     left: 0;
-    width: 260px;
+    width: 300px;
     display: block;
     z-index: 1;
     color: #fff;
     font-weight: 200;
     background-size: cover;
     background-position: center center;
+}
+#account{
+    position: relative;
+    /* display: none; */
+}
+
+#event{
+    display: none;
 }
 
 .sidebar .sidebar-wrapper,
@@ -354,7 +362,7 @@ body>.navbar-collapse .sidebar-wrapper {
     max-height: calc(100vh - 75px);
     min-height: 100%;
     overflow: auto;
-    width: 260px;
+    width: 300px;
     z-index: 4;
     padding-bottom: 100px;
 }
@@ -517,6 +525,47 @@ body>.navbar-collapse .nav .nav-link {
     font-weight: 600;
 }
 
+.list-group-item{
+    background-color: transparent;
+    text-transform: uppercase;
+    padding: 5px 0px;
+    display: block;
+    font-size: 18px;
+    color: #FFFFFF;
+    text-align: center;
+    font-weight: 400;
+    line-height: 30px;
+    padding: 8px 16px;
+
+}
+.list-group-item:hover,
+.list-group-item:focus,
+.list-group-item.active{
+    background-color: transparent;
+    color: #777777;
+    border-color: #777777;
+}
+
+.sidebar .votes{
+    width: 300px;
+    padding: 10px 10px;
+    display: inline-block;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+.upvote{
+    float: left;
+    width: 50%;
+}
+.downvote{
+    float: left;
+    width: 50%;
+}
+.submit{
+    margin: 5px;
+    overflow: auto;
+    color: white;
+}
+
 .sidebar .logo,
 body>.navbar-collapse .logo {
     padding: 10px 15px;
@@ -525,12 +574,21 @@ body>.navbar-collapse .logo {
 
 .sidebar .logo p,
 body>.navbar-collapse .logo p {
-    float: left;
+    /* float: left; */
     font-size: 20px;
     margin: 10px 10px;
     color: #FFFFFF;
     line-height: 20px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+#account{
+    float: right;
+    display: none;
+}
+#createEvent,
+#event{
+    float: left;
+    display: none;
 }
 
 .sidebar .logo .simple-text,
@@ -690,14 +748,14 @@ body>.navbar-collapse[data-color="purple"]:after {
 .main-panel {
     background: rgba(203, 203, 210, 0.15);
     position: relative;
-    float: right;
-    width: calc(100% - 260px);
-    min-height: 100%;
+    /* float: right; */
+    height: 100%;
+    /* min-width: 50%; */
 }
 
 .main-panel>.content {
     padding: 30px 15px;
-    min-height: calc(100% - 123px);
+    height: calc(100% - 123px);
 }
 
 .main-panel>.footer {
@@ -710,7 +768,7 @@ body>.navbar-collapse[data-color="purple"]:after {
 
 .sidebar,
 .main-panel {
-    overflow: auto;
+    overflow: hidden;
     max-height: 100%;
     height: 100%;
     -webkit-transition-property: top, bottom;
@@ -876,7 +934,7 @@ body>.navbar-collapse[data-color="purple"]:after {
     filter: alpha(opacity=80);
     padding: 8px 16px;
     border-color: #888888;
-    color: #888888;
+    color: #ffffff;
 }
 
 .btn:hover,
@@ -3971,22 +4029,27 @@ Copyright (c) 2015 Daniel Eden
 
 /*          Changes for small display      */
 
-@media (max-width: 991px) {
+@media (max-width: 991px) { /*phones*/
     .sidebar {
-        right: 0 !important;
-        left: auto;
+        bottom: 0 !important;
+        top: auto;
+        width:100%;
         position: absolute;
-        -webkit-transform: translate3d(262px, 0, 0);
-        -moz-transform: translate3d(262px, 0, 0);
-        -o-transform: translate3d(262px, 0, 0);
-        -ms-transform: translate3d(262px, 0, 0);
-        transform: translate3d(262px, 0, 0) !important;
+        -webkit-transform: translate3d( 0,70%, 0);
+        -moz-transform: translate3d( 0,70%, 0);
+        -o-transform: translate3d(0,70%, 0);
+        -ms-transform: translate3d( 0,70%, 0);
+        transform: translate3d( 0,70%, 0) !important;
         -webkit-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
         -moz-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
         -o-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
         -ms-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
         transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
     }
+    .sidebar .sidebar-wrapper,
+body>.navbar-collapse .sidebar-wrapper {
+    width: 100%;
+}
     .nav-open .main-panel {
         position: absolute;
         left: 0;
@@ -4080,7 +4143,7 @@ Copyright (c) 2015 Daniel Eden
         position: relative;
     }
     .wrapper {
-        left: 0;
+        bottom: 0;
         background-color: white;
     }
     .navbar .container {
@@ -4108,11 +4171,11 @@ Copyright (c) 2015 Daniel Eden
         border-top: none;
         text-align: left;
         padding: 0;
-        -webkit-transform: translate3d(260px, 0, 0);
-        -moz-transform: translate3d(260px, 0, 0);
-        -o-transform: translate3d(260px, 0, 0);
-        -ms-transform: translate3d(260px, 0, 0);
-        transform: translate3d(260px, 0, 0);
+        -webkit-transform: translate3d(300px, 0, 0);
+        -moz-transform: translate3d(300px, 0, 0);
+        -o-transform: translate3d(300px, 0, 0);
+        -ms-transform: translate3d(300px, 0, 0);
+        transform: translate3d(300px, 0, 0);
         -webkit-transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
         -moz-transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
         -o-transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
@@ -4575,7 +4638,7 @@ Copyright (c) 2015 Daniel Eden
     }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 991px) { /*phones*/
     .table-responsive {
         width: 100%;
         margin-bottom: 15px;
