@@ -37,22 +37,6 @@
 </head>
 
 <body>
-    <!-- for changing the event -->
-        <div>
-                <form id="add-event-form">
-                    <input type="text" name="name" placeholder="Event name">
-                    <input type="text" name="description" placeholder="Description">
-                    <button>Add Event</button>
-                </form>
-                <form id="delete-event-form">
-                    <button>Delete the selected marker</button>
-                </form>
-                <form id="delete-new-form">
-                    <button>Remove my event creation (blue marker)</button>
-                </form>
-            </div>
-
-
     <div class="wrapper">
         <div class="sidebar" data-color="red" id="event">
             <!--
@@ -97,6 +81,40 @@
                 
             </div>
         </div>
+        <!-- To create an event -->
+        <div class="sidebar" data-color="red" id="createEvent">
+                <!--
+            Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
+    
+            Tip 2: you can also add an image using data-image tag
+        -->
+                <div class="sidebar-wrapper">
+                    <form id="add-event-form">
+                     <div class="logo">
+                            <a class="simple-text">
+                                    <input type="text" name="name" placeholder="Event name">
+                            </a>
+                        </div>
+                        <div class="logo">
+                            <a class="simple-text">
+                                Time
+                            </a>
+                        </div>
+                        <div class="logo">
+                            <a class="text">
+                                    <input type="text" name="description" placeholder="Description">
+                            </a>
+                        </div>
+                        <button class="btn">Add Event</button>
+                    </form>
+                    <form id="delete-event-form">
+                            <button class="btn"> Delete the selected marker</button>
+                    </form>
+                    <form id="delete-new-form">
+                            <button class="btn">Remove my event creation (blue marker)</button>
+                    </form>
+                 </div>
+            </div>
         <div class="sidebar collapse" data-color="red" id="account">
             <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
@@ -209,7 +227,9 @@
 
 <script type="text/javascript">
     function showAccount(){
-        document.getElementById("account").style.display = "none";
+        var accountSidebar = document.getElementById("account");
+        if (accountSidebar.style.display == "block") { accountSidebar.style.display = "none"; }
+        else accountSidebar.style.display = "block";
         return true;
     }
 </script>

@@ -578,9 +578,12 @@ body>.navbar-collapse .logo p {
 }
 #account{
     float: right;
+    display: none;
 }
+#createEvent,
 #event{
     float: left;
+    display: none;
 }
 
 .sidebar .logo .simple-text,

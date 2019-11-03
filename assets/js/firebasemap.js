@@ -167,6 +167,7 @@ function initMap() {
         content: 'Please add an event'
     });
 
+    const changeEventSidebar = document.querySelector('#createEvent');
 
     //Add event to Database
     add_form.addEventListener('submit', (e) =>{
@@ -181,6 +182,7 @@ function initMap() {
         //Clear the text in the forms after adding
         add_form.name.value = '';
         add_form.description.value = '';
+        changeEventSidebar.style.display = "none";
     });
 
     //Delete event from Database
@@ -188,6 +190,7 @@ function initMap() {
         //Prevent reloading the page
         e.preventDefault();
         db.collection('events').doc(instantClickID).delete();
+        changeEventSidebar.style.display = "none";
     });
 
     //Remove the marker of adding an event (blue one)
@@ -195,14 +198,18 @@ function initMap() {
         //Prevent reloading the page
         e.preventDefault();
         marker.setMap(null);
+        changeEventSidebar.style.display = "none";
     });
 
     ///////////////////////
     //CLICK TO ADD EVENT//
     ///////////////////////
 
+
     //Listen for a double click on the map
     map.addListener('dblclick', function(e) {
+        changeEventSidebar.style.display = "block";
+
 
         //Remove from the map previous markers if there were some
         marker.setMap(null);
