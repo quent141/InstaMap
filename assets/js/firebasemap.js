@@ -20,6 +20,8 @@ const db = firebase.firestore();
 var infoWindow;
 var instantClickID;
 
+var events = [];
+
 function initMap() {
 
     /////////////////////////////////////////////////////////////////////////////////////
@@ -63,7 +65,8 @@ function initMap() {
     /////////////////////////////////////////////////////////////////////////////////////
     ////////////             REAL TIME UPDATE MARKERS ON MAP              ///////////////
     /////////////////////////////////////////////////////////////////////////////////////
-    var markers = [];
+    // var markers = [];
+
 
     function updateMarker(markerIndex, change){
 
@@ -82,11 +85,11 @@ function initMap() {
 
     function deleteMarker(markerIndex){
 
-        var marker = markers[markerIndex];
+        var marker = events[markerIndex].marker;
         //Remove the marker of the map
         marker.setMap(null);
         //Remove the marker from "markers" array
-        markers.splice(markerIndex, 1);
+        events.splice(markerIndex, 1);
     }
 
     function createMarker(event){
@@ -104,19 +107,22 @@ function initMap() {
             myOwnProperty: idEvent
         });
 
-        //Add Name and Description to InfoBox
-        var infoBox = '<div>' +
-            '<h3 class="name">' + nameEvent + '</h3>' +
-            '<div>' +
-            '<p class="description">' + descriptionEvent + '</p>' +
-            '</div>' +
-            '</div>';
+        var event = {marker: newMarker, name: nameEvent, description: descriptionEvent, upvotes: 0, downvotes: 0}
 
-        //Check function up for info about it
-        attachInfo(newMarker, infoBox);
+        // //Add Name and Description to InfoBox
+        // var infoBox = '<div>' +
+        //     '<h3 class="name">' + nameEvent + '</h3>' +
+        //     '<div>' +
+        //     '<p class="description">' + descriptionEvent + '</p>' +
+        //     '</div>' +
+        //     '</div>';
+
+        // //Check function up for info about it
+        attachInfo(newMarker);
 
         // Add newMarker to "markers" array
-        markers.push(newMarker);
+        // markers.push(newMarker);
+        events.push(event);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////
@@ -131,12 +137,12 @@ function initMap() {
             //Keep track of Added(= -1) or Modified/Removed(> -1)
             var markerIndex = -1;
 
-            markers.forEach(marker => {
+            events.forEach(event => {
 
                 //Check if marker already exist - id (strings) are equal or not
-                if ( marker.myOwnProperty == change.doc.id ) {
+                if ( event.marker.myOwnProperty == change.doc.id ) {
                     //Keep track of the marker's index that already exists
-                    markerIndex = markers.indexOf(marker);
+                    markerIndex = events.indexOf(event);
                 }
             });
 
@@ -168,6 +174,7 @@ function initMap() {
     });
 
     const changeEventSidebar = document.querySelector('#createEvent');
+    
 
     //Add event to Database
     add_form.addEventListener('submit', (e) =>{
@@ -205,7 +212,6 @@ function initMap() {
     //CLICK TO ADD EVENT//
     ///////////////////////
 
-
     //Listen for a double click on the map
     map.addListener('dblclick', function(e) {
         changeEventSidebar.style.display = "block";
@@ -234,6 +240,10 @@ function initMap() {
         //google.maps.event.removeListener(addEventListener);
     });
 
+    map.addListener('click', function(){
+        eventSidebar.style.display = "none";
+    });
+
     //Listen for a click on the marker added by dbclick
     marker.addListener('click', function() {
         window.open(marker.get('map'), marker);
@@ -252,6 +262,7 @@ function placeMarkerAndPanTo(latLng, map, marker) {
     map.panTo(latLng);
 }
 
+const eventSidebar = document.querySelector('#event');
 // Attaches an info window to a marker with a message showing name and description of the event.
 // When the marker is clicked, the info window will show the info.
 function attachInfo(marker, info) {
@@ -261,7 +272,14 @@ function attachInfo(marker, info) {
 
     //Listen for a click on the Marker
     marker.addListener('click', function() {
-        infowindow.open(marker.get('map'), marker);
+        eventSidebar.style.display = "block";
+        index = events.findIndex(i => i.marker === marker);
+        var event = events[index];
+        document.querySelector('#event-name').innerHTML = event.name;
+        document.querySelector('#event-description').innerHTML = event.description;
+        document.querySelector('#event-up-votes').innerHTML = event.upvotes;
+        document.querySelector('#event-down-votes').innerHTML = event.downvotes;
+        // var event = {marker: newMarker, description: descriptionEvent, upvotes: 0, downvotes: 0}
         instantClickID = marker.myOwnProperty;
     });
 }
