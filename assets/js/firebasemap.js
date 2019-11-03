@@ -284,6 +284,13 @@ function attachInfo(marker, info) {
     });
 }
 
+function showAccount(){
+    var accountSidebar = document.getElementById("account");
+    if (accountSidebar.style.display == "block") { accountSidebar.style.display = "none"; }
+    else accountSidebar.style.display = "block";
+    return true;
+}
+
 
 // ++++++++++RECAP+++++++++++
 //----------------------------

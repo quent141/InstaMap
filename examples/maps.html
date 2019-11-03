@@ -15,6 +15,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- TODO - make responsive (access acount on phone) -->
+
 <head>
     <meta charset="utf-8" />
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
@@ -105,13 +107,13 @@
                                     <input type="text" name="description" placeholder="Description">
                             </a>
                         </div>
-                        <button class="btn">Add Event</button>
+                        <button class="btn submit">Add Event</button>
                     </form>
                     <form id="delete-event-form">
-                            <button class="btn"> Delete the selected marker</button>
+                            <button class="btn submit"> Delete the selected marker</button>
                     </form>
                     <form id="delete-new-form">
-                            <button class="btn">Remove my event creation (blue marker)</button>
+                            <button class="btn submit">Cancel</button>
                     </form>
                  </div>
             </div>
@@ -146,7 +148,7 @@
             <nav class="navbar navbar-expand-lg " color-on-scroll="500">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#pablo"> InstaMap </a>
-                    <div class="collapse navbar-collapse justify-content-end" id="navigation">
+                    <!-- <div class="collapse navbar-collapse justify-content-end" id="navigation"> -->
                         <ul class="nav navbar-nav mr-auto">
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
@@ -164,7 +166,7 @@
                             
                         </ul>
                         
-                    </div>
+                    <!-- </div> -->
                 </div>
             </nav>
             <!-- End Navbar -->
@@ -211,22 +213,5 @@
 </script>
 
 <script src="../assets/js/firebasemap.js"></script>
-<!-- 
-<script type="text/javascript">
-    $(document).ready(function() {
-        // Javascript method's body can be found in assets/js/demos.js
-        demo.initGoogleMaps();
-
-    });
-</script> -->
-
-<script type="text/javascript">
-    function showAccount(){
-        var accountSidebar = document.getElementById("account");
-        if (accountSidebar.style.display == "block") { accountSidebar.style.display = "none"; }
-        else accountSidebar.style.display = "block";
-        return true;
-    }
-</script>
 
 </html>

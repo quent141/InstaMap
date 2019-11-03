@@ -554,11 +554,16 @@ body>.navbar-collapse .nav .nav-link {
 }
 .upvote{
     float: left;
-    width: 50%
+    width: 50%;
 }
 .downvote{
     float: left;
-    width: 50%
+    width: 50%;
+}
+.submit{
+    margin: 5px;
+    overflow: auto;
+    color: white;
 }
 
 .sidebar .logo,
@@ -929,7 +934,7 @@ body>.navbar-collapse[data-color="purple"]:after {
     filter: alpha(opacity=80);
     padding: 8px 16px;
     border-color: #888888;
-    color: #888888;
+    color: #ffffff;
 }
 
 .btn:hover,
