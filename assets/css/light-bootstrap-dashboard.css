@@ -347,6 +347,9 @@ body>.navbar-collapse {
     background-size: cover;
     background-position: center center;
 }
+#account{
+    position: relative;
+}
 
 .sidebar .sidebar-wrapper,
 body>.navbar-collapse .sidebar-wrapper {
@@ -517,6 +520,27 @@ body>.navbar-collapse .nav .nav-link {
     font-weight: 600;
 }
 
+.list-group-item{
+    background-color: transparent;
+    text-transform: uppercase;
+    padding: 5px 0px;
+    display: block;
+    font-size: 18px;
+    color: #FFFFFF;
+    text-align: center;
+    font-weight: 400;
+    line-height: 30px;
+    padding: 8px 16px;
+
+}
+.list-group-item:hover,
+.list-group-item:focus,
+.list-group-item.active{
+    background-color: transparent;
+    color: #777777;
+    border-color: #777777;
+}
+
 .sidebar .votes{
     width: 300px;
     padding: 10px 10px;
@@ -540,12 +564,18 @@ body>.navbar-collapse .logo {
 
 .sidebar .logo p,
 body>.navbar-collapse .logo p {
-    float: left;
+    /* float: left; */
     font-size: 20px;
     margin: 10px 10px;
     color: #FFFFFF;
     line-height: 20px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+#account{
+    float: right;
+}
+#event{
+    float: left;
 }
 
 .sidebar .logo .simple-text,
@@ -705,8 +735,7 @@ body>.navbar-collapse[data-color="purple"]:after {
 .main-panel {
     background: rgba(203, 203, 210, 0.15);
     position: relative;
-    float: right;
-    width: calc(100% - 260px);
+    /* float: right; */
     min-height: 100%;
 }
 
