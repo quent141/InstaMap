@@ -60,6 +60,7 @@ function initMap() {
             infoWindow.setContent('You are here');
             infoWindow.open(map);
             map.setCenter(positionNow);
+            map.setZoom(15);
         })
     }
     else{console.log("Something went wrong with geolocation")}
