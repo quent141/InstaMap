@@ -1,3 +1,4 @@
+*
 <h1>Low-Fi - InstaMap</h1>
 
 <h3>Problem statement :</h3>
