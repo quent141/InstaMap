@@ -218,10 +218,25 @@
 <!-- <script src="../assets/js/demo.js"></script> -->
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
 </script>
+ 
+<!-- PREVENT FROM NOT LOADING THE MAP --> 
+<script src="../assets/js/firebasemap.js">
+    function initMap() {} // now it IS a function and it is in global
+
+    $(() => {
+        initMap = function() {
+        }
+    })
+</script>
+ 
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTdcgC0GQofYoHupTjN9qOzgsOcHxNf0s&callback=initMap">
     </script>
 
+<<<<<<< HEAD
 <script src="../assets/js/firebasemap.js"></script>
 
 </html>
+=======
+</html>
+>>>>>>> 6408b318bd9ad3a7332cc1b8f26dffead33cee55
