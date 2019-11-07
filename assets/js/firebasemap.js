@@ -21,6 +21,7 @@ var infoWindow;
 var instantClickID;
 
 var events = [];
+var presentEventName;
 
 function initMap() {
 
@@ -41,17 +42,17 @@ function initMap() {
     */
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 6,
-        center: {lat: 36.3380, lng: 127.4021},
+        center: { lat: 36.3380, lng: 127.4021 },
         disableDoubleClickZoom: true,
-        gestureHandling : "cooperative"
+        gestureHandling: "cooperative"
     });
 
     infoWindow = new google.maps.InfoWindow;
 
     // HTML5 geolocation to center map
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-             var positionNow = {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var positionNow = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
@@ -62,7 +63,7 @@ function initMap() {
             map.setCenter(positionNow);
         })
     }
-    else{console.log("Something went wrong with geolocation")}
+    else { console.log("Something went wrong with geolocation") }
 
     /////////////////////////////////////////////////////////////////////////////////////
     ////////////             REAL TIME UPDATE MARKERS ON MAP              ///////////////
@@ -70,22 +71,19 @@ function initMap() {
     // var markers = [];
 
 
-    function updateMarker(markerIndex, change){
+    function updateMarker(markerIndex, change) {
 
-        if (change.type == 'removed')
-        {deleteMarker(markerIndex);}
+        if (change.type == 'removed') { deleteMarker(markerIndex); }
 
-        if (change.type == 'modified')
-        {
+        if (change.type == 'modified') {
             deleteMarker(markerIndex);
             createMarker(change.doc);
         }
 
-        else if (change.type == 'added')
-        {createMarker(change.doc);}
+        else if (change.type == 'added') { createMarker(change.doc); }
     }
 
-    function deleteMarker(markerIndex){
+    function deleteMarker(markerIndex) {
 
         var marker = events[markerIndex].marker;
         //Remove the marker of the map
@@ -94,22 +92,26 @@ function initMap() {
         events.splice(markerIndex, 1);
     }
 
-    function createMarker(event){
+    function createMarker(event) {
 
-        var latEvent          = event.data().position._lat;
-        var lngEvent          = event.data().position._long;
-        var nameEvent         = event.data().name;
-        var descriptionEvent  = event.data().description;
-        var idEvent           = event.id;
+        var latEvent = event.data().position._lat;
+        var lngEvent = event.data().position._long;
+        var nameEvent = event.data().name;
+        var descriptionEvent = event.data().description;
+        var idEvent = event.id;
+        var upVoteEvent = event.data().smile;
+        var downVoteEvent = event.data().poop;
+        var ID = event.id;
+
 
         var newMarker = new google.maps.Marker({
-            position: {lat: latEvent, lng: lngEvent},
+            position: { lat: latEvent, lng: lngEvent },
             map: map,
             title: nameEvent,
             myOwnProperty: idEvent
         });
 
-        var event = {marker: newMarker, name: nameEvent, description: descriptionEvent, upvotes: 0, downvotes: 0}
+        var event = { marker: newMarker, name: nameEvent, description: descriptionEvent, upvotes: upVoteEvent, downvotes: downVoteEvent, ID: ID }
 
         // //Add Name and Description to InfoBox
         // var infoBox = '<div>' +
@@ -142,7 +144,7 @@ function initMap() {
             events.forEach(event => {
 
                 //Check if marker already exist - id (strings) are equal or not
-                if ( event.marker.myOwnProperty == change.doc.id ) {
+                if (event.marker.myOwnProperty == change.doc.id) {
                     //Keep track of the marker's index that already exists
                     markerIndex = events.indexOf(event);
                 }
@@ -161,13 +163,16 @@ function initMap() {
     const add_form = document.querySelector('#add-event-form');
     const del_form = document.querySelector('#delete-event-form');
     const new_del_form = document.querySelector('#delete-new-form');
+    const upVotingButton = document.querySelector('#event-up-button');
+    const downVotingButton = document.querySelector('#event-down-button');
+
 
     //Create a new invisible marker (not linked to map)
     var marker = new google.maps.Marker({
-        position: {lat:0,lng:0},
+        position: { lat: 0, lng: 0 },
         draggable: true,
         title: "Drag me to your event!",
-        icon: {url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"}
+        icon: { url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png" }
     });
 
     //Create an InfoWindow linked to the previous marker
@@ -176,26 +181,33 @@ function initMap() {
     });
 
     const changeEventSidebar = document.querySelector('#createEvent');
-    
+
 
     //Add event to Database
-    add_form.addEventListener('submit', (e) =>{
+    add_form.addEventListener('submit', (e) => {
         //Prevent reloading the page
         e.preventDefault();
-
-        db.collection('events').add({
-            name : add_form.name.value,
-            description : add_form.description.value,
-            position : new firebase.firestore.GeoPoint(marker.position.lat(), marker.position.lng())
+        signinCheck(function (e) {
+            db.collection('events').add({
+                name: add_form.name.value,
+                description: add_form.description.value,
+                position: new firebase.firestore.GeoPoint(marker.position.lat(), marker.position.lng()),
+                creater: user_email,
+                smile: 0,
+                poop: 0,
+                anymous: false
+            });
+            //Clear the text in the forms after adding
+            add_form.name.value = '';
+            add_form.description.value = '';
+            changeEventSidebar.style.display = "none";
+        }, function () {
+            document.location.href = "signin.html";
         });
-        //Clear the text in the forms after adding
-        add_form.name.value = '';
-        add_form.description.value = '';
-        changeEventSidebar.style.display = "none";
     });
 
     //Delete event from Database
-    del_form.addEventListener('submit', (e) =>{
+    del_form.addEventListener('submit', (e) => {
         //Prevent reloading the page
         e.preventDefault();
         db.collection('events').doc(instantClickID).delete();
@@ -203,7 +215,7 @@ function initMap() {
     });
 
     //Remove the marker of adding an event (blue one)
-    new_del_form.addEventListener('submit', (e) =>{
+    new_del_form.addEventListener('submit', (e) => {
         //Prevent reloading the page
         e.preventDefault();
         marker.setMap(null);
@@ -215,7 +227,7 @@ function initMap() {
     ///////////////////////
 
     //Listen for a double click on the map
-    map.addListener('dblclick', function(e) {
+    map.addListener('dblclick', function (e) {
         changeEventSidebar.style.display = "block";
 
 
@@ -232,7 +244,7 @@ function initMap() {
         console.log("Lat: ", e.latLng.lat(), "Long: ", e.latLng.lng());
 
         //Check marker's position at any time
-        marker.addListener('dragend', function(e) {
+        marker.addListener('dragend', function (e) {
             //SHOW THE NEW LOCATION AFTER DRAG:)
             console.log("Dragged Point");
             console.log("Lat: ", marker.position.lat(), "Long: ", marker.position.lng());
@@ -242,14 +254,37 @@ function initMap() {
         //google.maps.event.removeListener(addEventListener);
     });
 
-    map.addListener('click', function(){
+    map.addListener('click', function () {
         eventSidebar.style.display = "none";
     });
 
     //Listen for a click on the marker added by dbclick
-    marker.addListener('click', function() {
+    marker.addListener('click', function () {
         window.open(marker.get('map'), marker);
     });
+
+    //Scoring system
+    //more need to be done, it's not secure
+
+
+    //upVotingButton.addEventListener('click', function () {
+    //    signinCheck(function () {
+    //        console.log(events);
+    //        new_data = events[presentEventName].smile + 1;
+    //        console.log(events);
+    //        events[presentEventName].smile = new_data;
+    //        db.collection('events').doc(events[presentEventName].ID).update({
+    //            smile: new_data
+    //        })
+    //    }, function () {
+    //        window.location = "signin,html";
+    //    });
+    //});
+
+
+    signinCheck(function () {
+        document.getElementById("AccountIDUpbar").innerHTML = user_email;
+    }, function () { });
 
 }
 
@@ -273,7 +308,8 @@ function attachInfo(marker, info) {
     });
 
     //Listen for a click on the Marker
-    marker.addListener('click', function() {
+    marker.addListener('click', function () {
+
         eventSidebar.style.display = "block";
         index = events.findIndex(i => i.marker === marker);
         var event = events[index];
@@ -283,16 +319,73 @@ function attachInfo(marker, info) {
         document.querySelector('#event-down-votes').innerHTML = event.downvotes;
         // var event = {marker: newMarker, description: descriptionEvent, upvotes: 0, downvotes: 0}
         instantClickID = marker.myOwnProperty;
+
+        document.querySelector('#event-down-button').addEventListener('click', function () {
+            signinCheck(function () {
+                new_data = event.downvotes + 1;
+                //console.log("new_data " + new_data);
+                event.downvotes = new_data;
+                //console.log("Name " + event.name);
+                //console.log("event.downvotes " + event.downvotes);
+                db.collection('events').doc(event.ID).update({
+                    poop: new_data
+                })
+                //update the diplay
+                document.getElementById("event-down-votes").innerHTML = new_data;
+            }, function () {
+                window.location = "signin.html";
+            });
+        });
+        document.querySelector('#event-up-button').addEventListener('click', function () {
+            signinCheck(function () {
+
+                var person = db.collection('hostCredit').where('state', '==', user_email);
+                new_data = event.upvotes + 1;
+                //console.log("new_data " + new_data);
+                event.upvotes = new_data;
+                //console.log("Name " + event.name);
+                //console.log("event.upvotes " + event.upvotes);
+                db.collection('events').doc(event.ID).update({
+                    smile: new_data
+                })
+                document.getElementById("event-up-votes").innerHTML = new_data;
+            }, function () {
+                window.location = "signin.html";
+            });
+        });
     });
 }
 
-function showAccount(){
-    var accountSidebar = document.getElementById("account");
-    if (accountSidebar.style.display == "block") { accountSidebar.style.display = "none"; }
-    else accountSidebar.style.display = "block";
-    return true;
+
+function showAccount() {
+    signinCheck(function () {
+        document.getElementById("AccountIDSidebar").innerHTML = user_email;
+        var accountSidebar = document.getElementById("account");
+        if (accountSidebar.style.display == "block") { accountSidebar.style.display = "none"; }
+        else accountSidebar.style.display = "block";
+        return true;
+    }, function () {
+        window.location = "signin.html";
+    });
+
 }
 
+function signinCheck(Yes, No) {
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            user_email = user.email;
+            Yes();
+        } else {
+            No();
+        }
+    });
+
+}
+
+function votedChecked() {
+
+}
+//check login
 
 // ++++++++++RECAP+++++++++++
 //----------------------------
@@ -304,5 +397,4 @@ function showAccount(){
 //----------------------------
 //=> Create a form to confirm our array : then "add" it to the DB
 // Handle dates to delete the obsolete markers
-
 

@@ -23,7 +23,8 @@
     <link rel="icon" type="image/png" href="../assets/img/favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>Light Bootstrap Dashboard - Free Bootstrap 4 Admin Dashboard by Creative Tim</title>
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+        name='viewport' />
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
@@ -36,6 +37,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-auth.js"></script>
     <!-- For Login Function -->
     <script src="../assets/js/login.js"></script>
 </head>
@@ -61,73 +63,77 @@
                 </div>
                 <div class="votes">
                     <div class="upvote">
-                        <button href="" class="btn">
+                        <button href="" class="btn" id="event-up-button">
                             😍
                         </button>
-                         <a class="simple-text" id="event-up-votes">
+                        <a class="simple-text" id="event-up-votes">
                             100
-                         </a>
+                        </a>
                     </div>
                     <div class="downvote">
-                        <button href="" class="btn">
+                        <button href="" class="btn" id="event-down-button">
                             💩
                         </button>
-                         <a class="simple-text" id="event-down-votes">
+                        <a class="simple-text" id="event-down-votes">
                             100
-                         </a>
+                        </a>
                     </div>
                 </div>
                 <div class="logo">
-                        <a class="text" id="event-description">
-                            Description.     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </a>
-                    </div>
-                
+                    <a class="text" id="event-description">
+                        Description. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                        ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
+                        in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </a>
+                </div>
+
             </div>
         </div>
         <!-- To create an event -->
         <div class="sidebar" data-color="red" id="createEvent">
-                <!--
+            <!--
             Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
     
             Tip 2: you can also add an image using data-image tag
         -->
-                <div class="sidebar-wrapper">
-                    <form id="add-event-form">
-                     <div class="logo">
-                            <a class="simple-text">
-                                    <input type="text" name="name" placeholder="Event name">
-                            </a>
-                        </div>
-                        <div class="logo">
-                            <a class="simple-text">
-                                Time
-                            </a>
-                        </div>
-                        <div class="logo">
-                            <a class="text">
-                                    <input type="text" name="description" placeholder="Description">
-                            </a>
-                        </div>
-                        <button class="btn submit">Add Event</button>
-                    </form>
-                    <form id="delete-event-form">
-                            <button class="btn submit"> Delete the selected marker</button>
-                    </form>
-                    <form id="delete-new-form">
-                            <button class="btn submit">Cancel</button>
-                    </form>
-                 </div>
+            <div class="sidebar-wrapper">
+                <form id="add-event-form">
+                    <div class="logo">
+                        <a class="simple-text">
+                            <input type="text" name="name" placeholder="Event name">
+                        </a>
+                    </div>
+                    <div class="logo">
+                        <a class="simple-text">
+                            Time
+                        </a>
+                    </div>
+                    <div class="logo">
+                        <a class="text">
+                            <input type="text" name="description" placeholder="Description">
+                        </a>
+                    </div>
+                    <button class="btn submit">Add Event</button>
+                </form>
+                <form id="delete-event-form">
+                    <button class="btn submit"> Delete the selected marker</button>
+                </form>
+                <form id="delete-new-form">
+                    <button class="btn submit">Cancel</button>
+                </form>
             </div>
+        </div>
         <div class="sidebar collapse" data-color="red" id="account">
             <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
         Tip 2: you can also add an image using data-image tag
     -->
-            <div class="sidebar-wrapper" >
+            <div class="sidebar-wrapper">
                 <div class="logo">
-                    <a class="simple-text">
+                    <a class="simple-text" id="AccountIDSidebar">
                         Account Name
                     </a>
                 </div>
@@ -140,9 +146,11 @@
                     </a>
                 </div>
                 <ul class="list-group">
-                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#messages" role="tab">My events</a>
-                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#messages" role="tab">Attended events</a>
-                </ul>   
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#messages" role="tab">My
+                        events</a>
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#messages"
+                        role="tab">Attended events</a>
+                </ul>
             </div>
         </div>
         <div class="main-panel">
@@ -151,23 +159,23 @@
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#pablo"> InstaMap </a>
                     <!-- <div class="collapse navbar-collapse justify-content-end" id="navigation"> -->
-                        <ul class="nav navbar-nav mr-auto">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nc-icon nc-zoom-split"></i>
-                                    <span class="d-lg-block">&nbsp;Search</span>
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="navbar-nav ml-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" onclick="showAccount()">
-                                    <span class="no-icon">Account</span>
-                                </a>
-                            </li>
-                            
-                        </ul>
-                        
+                    <ul class="nav navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nc-icon nc-zoom-split"></i>
+                                <span class="d-lg-block">&nbsp;Search</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="showAccount()">
+                                <span class="no-icon" id="AccountIDUpbar">Account</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
                     <!-- </div> -->
                 </div>
             </nav>
@@ -183,14 +191,14 @@
                             <script>
                                 document.write(new Date().getFullYear())
                             </script>
-                            <a >InstMap</a>, so you don't miss out
+                            <a>InstMap</a>, so you don't miss out
                         </p>
                     </nav>
                 </div>
             </footer>
         </div>
     </div>
-   
+
 </body>
 <!--   Core JS Files   -->
 <script src="../assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
@@ -211,8 +219,8 @@
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
 </script>
 <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTdcgC0GQofYoHupTjN9qOzgsOcHxNf0s&callback=initMap">
-</script>
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTdcgC0GQofYoHupTjN9qOzgsOcHxNf0s&callback=initMap">
+    </script>
 
 <script src="../assets/js/firebasemap.js"></script>
 

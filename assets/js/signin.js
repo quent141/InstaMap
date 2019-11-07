@@ -5,27 +5,28 @@ function initApp() {
     var btnLogin = document.getElementById('btnLogin');
     var btnGoogle = document.getElementById('btngoogle');
     var btnSignUp = document.getElementById('btnSignUp');
-    var btnFaceBok = document.getElementById('btnFaceBok');
+    //var btnFaceBok = document.getElementById('btnFaceBok');
     var home_page = "maps.html";
 
-    btnFaceBok.addEventListener('click', function () {
-        var provider = new firebase.auth.FacebookAuthProvider();
-        firebase.auth().signInWithPopup(provider).then(function (result) {
-            // This gives you a Facebook Access Token. You can use it to access the Facebook API. 
-            var token = result.credential.accessToken;
-            // The signed-in user info. 
-            var user = result.user;
-            window.location = home_page;
-        }).catch(function (error) {
-            // Handle Errors here. 
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // The email of the user's account used. 
-            var email = error.email;
-            // The firebase.auth.AuthCredential type that was used. 
-            var credential = error.credential;
-        });
-    });
+
+    //btnFaceBok.addEventListener('click', function () {
+    //    var provider = new firebase.auth.FacebookAuthProvider();
+    //    firebase.auth().signInWithPopup(provider).then(function (result) {
+    //        // This gives you a Facebook Access Token. You can use it to access the Facebook API. 
+    //        var token = result.credential.accessToken;
+    //        // The signed-in user info. 
+    //        var user = result.user;
+    //        window.location = home_page;
+    //    }).catch(function (error) {
+    //        // Handle Errors here. 
+    //        var errorCode = error.code;
+    //        var errorMessage = error.message;
+    //        // The email of the user's account used. 
+    //        var email = error.email;
+    //        // The firebase.auth.AuthCredential type that was used. 
+    //        var credential = error.credential;
+    //    });
+    //});
 
     btnLogin.addEventListener('click', function () {
         var email = txtEmail.value;
@@ -46,15 +47,12 @@ function initApp() {
     });
 
     btnGoogle.addEventListener('click', function () {
-        alert(1);
         var provider = new firebase.auth.GoogleAuthProvider();
         firebase.auth().signInWithPopup(provider)
             .then(function () {
-                alert(2);
                 window.location = home_page;
             })
             .catch(function (error) {
-                alert(3);
                 // Handle Errors here.
                 var errorCode = error.code;
                 var errorMessage = error.message;
@@ -72,6 +70,7 @@ function initApp() {
                 create_alert("success", "You could sign in  right now!");
                 txtEmail.value = "";
                 txtPassword.value = "";
+                window.location = home_page;
             })
             .catch(function (error) {
                 // Handle Errors here.
