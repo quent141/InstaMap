@@ -18,9 +18,9 @@ For an event on the campus, it is difficult to predict how many people are inter
 </ul>
 
 <h3>Prototypes :</h3>
-<a href=https://marvelapp.com/9hcdb2g>Marvel Prototyp: https://marvelapp.com/9hcdb2g</a><br/>
-<a href=https://marvelapp.com/9hcdb2g>Working Prototyp: https://instamap-1571822648090.web.app/</a><br/>
-<a href=https://instamap-1571822648090.web.app/InstaMap/examples/maps.html>Firebase Prototyp: https://instamap-1571822648090.web.app/InstaMap/examples/maps.html/</a>
+<a href=https://marvelapp.com/9hcdb2g>Marvel Prototype: https://marvelapp.com/9hcdb2g</a><br/>
+<a href=https://marvelapp.com/9hcdb2g>Working Prototype: https://instamap-1571822648090.web.app/</a><br/>
+<a href=https://instamap-1571822648090.web.app/InstaMap/examples/maps.html>Firebase Prototype: https://instamap-1571822648090.web.app/InstaMap/examples/maps.html/</a>
 
 Give feedback about the prototype tool : 
 <ul>
@@ -134,7 +134,7 @@ Criticality : NORMAL (user experience)
 </li>
 
 <li><p>P3 : How can I create a new event? Long pressing? Oh no double tap.</p>
-Criticality: Normal (user experience)
+Criticality: NORMAL (user experience)
 <ul>
 <li><p>We need to find out what the broadly known standard is or create a button for creating new events.</p></li>
 </ul>
