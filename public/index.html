@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <style>
+            #map {
+                width: 100%;
+                height: 400px;
+                background-color: grey;
+            }
+            p {white-space: pre-wrap;}
+            textarea {resize: none;}
+        </style>
+        <title>Meevent</title>
+        <link href = "images/favicon.ico" rel="icon" type="image/icon">
+    </head>
+
+    <body class="grey lighten-2">
+
+        <!-- NAVBAR -->
+        <nav class="z-depth-0 grey lighten-4">
+            <div class="nav-wrapper container">
+                <a href="#" class="brand-logo left">
+                    <h5 style="width: 88px; margin-top: 20px; color: Black">Meevent</h5>
+                </a>
+                <ul id="nav-mobile" class="right">
+                    <li class="logged-in" style="display: none;">
+                        <a href="#" class="grey-text modal-trigger" data-target="modal-account">Account</a>
+                    </li>
+                    <li class="logged-in" style="display: none;">
+                        <a href="#" class="grey-text" id="logout">Logout</a>
+                    </li>
+                    <li class="logged-out" style="display: none;">
+                        <a href="#" class="grey-text modal-trigger" data-target="modal-login">Login</a>
+                    </li>
+                    <li class="logged-out" style="display: none;">
+                        <a href="#" class="grey-text modal-trigger" data-target="modal-signup">Sign up</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+<!--        ADMIN ACTIONS
+        <form class="center-align admin-actions" style = "margin: 40px auto; max-width: 300px;">
+            <input type="email" placeholder="User email" id="admin-email" required />
+            <button class="btn-small yellow darken-2 z-depth-0">Make Admin</button>
+        </form>-->
+
+        <!-- SIGN UP MODAL -->
+        <div id="modal-signup" class="modal">
+            <div class="modal-content">
+                <h4>Sign up</h4><br />
+                <form id="signup-form">
+                    <div class="input-field">
+                        <input type="text" id="signup-name" required />
+                        <label for="signup-email">Name or pseudo</label>
+                    </div>
+                    <div class="input-field">
+                        <input type="email" id="signup-email" required />
+                        <label for="signup-email">Email address</label>
+                    </div>
+                    <div class="input-field">
+                        <input type="password" id="signup-password" required />
+                        <label for="signup-password">Choose password</label>
+                    </div>
+                    <button class="btn yellow darken-2 z-depth-0">Sign up</button>
+                    <p class="error pink-text center-align"></p>
+                </form>
+            </div>
+        </div>
+
+        <!-- LOGIN MODAL -->
+        <div id="modal-login" class="modal">
+            <div class="modal-content">
+                <h4>Login</h4><br />
+                <form id="login-form">
+                    <div class="input-field">
+                        <input type="email" id="login-email" required />
+                        <label for="login-email">Email address</label>
+                    </div>
+                    <div class="input-field">
+                        <input type="password" id="login-password" required />
+                        <label for="login-password">Your password</label>
+                    </div>
+                    <button class="btn yellow darken-2 z-depth-0">Login</button>
+                    <p class="error pink-text center-align"></p>
+                </form>
+            </div>
+        </div>
+
+        <!-- ACCOUNT MODAL -->
+        <div id="modal-account" class="modal">
+            <div class="modal-content center-align">
+                <div class="account-details"></div>
+            </div>
+        </div>
+
+        <!-- MAP -->
+        <div id="map" class="container"></div>
+
+        <!-- GUIDE LIST -->
+        <div id="guide-list" class="container dbclickedHide" style="margin-top: 20px;">
+            <ul class="collapsible z-depth-0 guides logged-in" style="border: none;display: none;">
+                <h5 class="infoDoubleTap center-align"> Double-tap on the map to add events</h5>
+                <p class="warning pink-text center-align"></p>
+            </ul>
+        </div>
+
+        <div class="container" style="margin-top: 20px;">
+            <ul class="collapsible z-depth-0 guides logged-out" style="border: none;display: none;">
+                <h5 class="center-align">Login to add events</h5>
+            </ul>
+        </div>
+
+        <!-- ACTION BUTTONS -->
+        <div class="logged-in">
+            <form id="delete-event-form" class="clickMarker center-align" style="display: none; margin: 20px auto; max-width: 300px;">
+                <button class="btn-large red darken-2">Delete the selected event</button>
+            </form>
+
+            <form id="add-event-form" class="dbclicked center-align" style="display: none; margin: 20px auto; max-width: 300px;">
+                <h5 class="center-align">Please fill out the form</h5>
+
+                <label>Event name</label>
+                <input type="text" name="name" placeholder="Event name" minlength="4" maxlength="30" required>
+
+                <label></label>
+                <label>Event description</label>
+                <textarea name="description" placeholder="Write your description here" rows = "120" cols="40"
+                          wrap="hard" maxlength="900" required
+                          style="display: block; margin: 20px auto; max-width: 300px;"></textarea>
+
+                <label></label>
+                <button class="btn-large blue" style="display: block; margin: 20px auto; max-width: 300px;">Add Event</button>
+            </form>
+
+            <form id="delete-new-form" class="dbclicked center-align" style="display: none; margin: 10px auto; max-width: 300px;">
+                <button class="btn-large red">  Cancel  </button>
+            </form>
+
+        </div>
+
+
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="/__/firebase/7.2.3/firebase-app.js"></script>
+        <script src="/__/firebase/7.2.3/firebase-auth.js"></script>
+        <script src="/__/firebase/7.2.3/firebase-firestore.js"></script>
+        <script src="/__/firebase/7.2.3/firebase-analytics.js"></script>
+        <script src="/__/firebase/7.2.3/firebase-functions.js"></script>
+        <!-- Initialize Firebase -->
+        <script src="/__/firebase/init.js"></script>
+
+        <!-- Link to Database -->
+        <script>
+            const db = firebase.firestore();
+            const auth = firebase.auth();
+            const functions = firebase.functions();
+        </script>
+
+
+
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script src="scripts/firebasemap.js">
+            function initMap() {} // now it IS a function and it is in global
+
+            $(() => {
+                initMap = function() {
+                }
+            })
+        </script>
+        <script src="scripts/index.js"></script>
+        <script src="scripts/auth.js"></script>
+        <script src="scripts/markerclusterer.js"></script>
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTdcgC0GQofYoHupTjN9qOzgsOcHxNf0s&callback=initMap">
+        </script>
+
+
+    </body>
+</html>
